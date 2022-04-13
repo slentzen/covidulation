@@ -7,12 +7,15 @@ public class Game extends JFrame {
     private GameScreen gameScreen;
 
     public Game() {
-        setSize(400, 400);
+
+        setSize(640, 640); // each sprite is 32 pixels wide and 32 pixels tall with space for 20 tiles
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+
         gameScreen = new GameScreen();
         add(gameScreen);
+
     }
 
 
