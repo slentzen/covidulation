@@ -4,31 +4,54 @@ import javax.swing.JPanel;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.ArrayList;
 import java.util.Random;
+import java.awt.image.BufferedImage;
 
 public class GameScreen extends JPanel {
 
     private Random random;
+    private BufferedImage img;
 
-    public GameScreen() {
+    private ArrayList<BufferedImage> sprites = new ArrayList<BufferedImage>();
+
+    public GameScreen(BufferedImage img) {
+        this.img = img;
+
+        loadSprites();
+
         random = new Random();
+
     }
 
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-//        g.setColor(Color.red);
+
 
         for (int x = 0; x < 20; x++) {
             for (int y = 0; y < 20; y++) {
-                g.setColor(getRndColor());
-                g.fillRect(x * 32, y * 32, 32, 32);
+                g.drawImage(sprites.get(getRndInt()), x * 32, y * 32, null);
             }
         }
     }
 
     private Color getRndColor() {
-        return new Color(random.nextInt(255), random.nextInt(255), random.nextInt(255));
+        return new Color(random.nextInt(256), random.nextInt(256), random.nextInt(256));
     }
+
+    private int getRndInt() {
+        return random.nextInt(100);
+    }
+
+    private void loadSprites() {
+        for (int x = 0; x < 10; x++) {
+            for (int y = 0; y < 10; y++) {
+                sprites.add(img.getSubimage(x * 32, y * 32, 32, 32));
+            }
+        }
+    }
+
+
 }
