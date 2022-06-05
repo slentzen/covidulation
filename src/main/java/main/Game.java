@@ -11,17 +11,24 @@ public class Game extends JFrame {
     private GameScreen gameScreen;
     private BufferedImage img;
 
+    private double timePerFrame;
+    private long lastFrame;
+
+
+
     public Game() {
 
+        timePerFrame = 1000000000.0 / 60.0;
         importImg();
 
         setSize(640, 640); // each sprite is 32 pixels wide and 32 pixels tall with space for 20 tiles
-        setVisible(true);
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
         gameScreen = new GameScreen(img);
         add(gameScreen);
+        setVisible(true); // must be last in constructor
 
     }
 
@@ -35,10 +42,22 @@ public class Game extends JFrame {
         }
     }
 
+    private void loopGame() {
+        while (true) {
+            if (System.nanoTime() - lastFrame >= timePerFrame) {
+                lastFrame = System.nanoTime();
+                repaint(); // updates the screen
+            } else {
+                // we do nothing
+            }
+        }
+    }
+
 
     public static void main(String[] args) {
         // TODO code application logic here
 
         Game game = new Game();
+        game.loopGame();
     }
 }
